@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">mykotlinproject</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_to_detail">Button to Detail</string>
+    <string name="button">To Detail</string>
+</resources>
