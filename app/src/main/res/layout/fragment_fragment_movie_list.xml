@@ -1,18 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".movielist.FragmentMovieList">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
+    <data>
 
+        <variable
+            name="movie1"
+            type="com.example.mykotlinproject.data.Movie" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button" />
+        <variable
+            name="viewModel"
+            type="com.example.mykotlinproject.movielist.MovieListViewModel" />
+    </data>
 
-</LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".movielist.FragmentMovieList">
+
+            <!-- TODO: Update blank fragment layout -->
+            <TextView
+                android:id="@+id/movie_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{movie1.mTitle}" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/mybutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="refresh data" />
+
+            <TextView
+                android:id="@+id/viewModelCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="local static text" />
+        </LinearLayout>
+    </ScrollView>
+</layout>
