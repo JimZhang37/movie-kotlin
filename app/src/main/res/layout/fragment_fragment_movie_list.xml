@@ -24,6 +24,10 @@
             tools:context=".movielist.FragmentMovieList">
 
             <!-- TODO: Update blank fragment layout -->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/testImage"/>
             <TextView
                 android:id="@+id/movie_title"
                 android:layout_width="match_parent"

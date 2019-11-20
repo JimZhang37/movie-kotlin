@@ -19,6 +19,7 @@ import com.example.mykotlinproject.EventObserver
 import com.example.mykotlinproject.R
 import com.example.mykotlinproject.data.Movie
 import com.example.mykotlinproject.databinding.FragmentFragmentMovieListBinding
+import com.squareup.picasso.Picasso
 
 /**
  * A simple [Fragment] subclass.
@@ -26,7 +27,7 @@ import com.example.mykotlinproject.databinding.FragmentFragmentMovieListBinding
 class FragmentMovieList :
     Fragment(),
     MovieListAdapter.ListItemClickListener {
-
+    private lateinit var binding: FragmentFragmentMovieListBinding
     private lateinit var mRV: RecyclerView
     private lateinit var mAdapter: MovieListAdapter
     private val viewModel by viewModels<MovieListViewModel>()
@@ -35,7 +36,7 @@ class FragmentMovieList :
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentFragmentMovieListBinding.inflate(
+        binding = FragmentFragmentMovieListBinding.inflate(
             inflater,
             container,
             false
@@ -62,7 +63,12 @@ class FragmentMovieList :
 //        mButton.setOnClickListener(View.OnClickListener { viewModel.refreshData()})
 
         setupListAdapter()
-
+        Picasso
+            .get()
+            .load("http://image.tmdb.org/t/p/w185//qdfARIhgpgZOBh3vfNhWS4hmSo3.jpg")
+            .placeholder(R.drawable.placeholder)
+            .error(R.drawable.mistake)
+            .into(binding.testImage)
         //setupListAdapter()
 
     }
