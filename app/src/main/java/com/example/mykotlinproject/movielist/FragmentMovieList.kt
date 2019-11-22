@@ -15,9 +15,11 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mykotlinproject.MoviesApplication
 import com.example.mykotlinproject.EventObserver
 import com.example.mykotlinproject.R
 import com.example.mykotlinproject.data.Movie
+import com.example.mykotlinproject.data.source.DefaultMovieRepository
 import com.example.mykotlinproject.databinding.FragmentFragmentMovieListBinding
 import com.squareup.picasso.Picasso
 
@@ -30,7 +32,9 @@ class FragmentMovieList :
     private lateinit var binding: FragmentFragmentMovieListBinding
     private lateinit var mRV: RecyclerView
     private lateinit var mAdapter: MovieListAdapter
-    private val viewModel by viewModels<MovieListViewModel>()
+    private val viewModel by viewModels<MovieListViewModel>{
+        MovieListViewModelFactory((requireContext().applicationContext as MoviesApplication).moviesRepository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -17,25 +17,25 @@ abstract class MovieDatabase : RoomDatabase() {
 
 }
 
-object ServiceLocator {
-
-    private val LOG_TAG = MovieDatabase::class.java!!.getSimpleName()
-
-    private val DATABASE_NAME = "movies_db"
-    private var sInstance: MovieDatabase? = null
-
-    fun getInstance(context: Context): MovieDatabase? {
-        if (sInstance == null) {
-
-            Log.d(LOG_TAG, "Creating new database instance")
-            sInstance = Room.databaseBuilder<MovieDatabase>(
-                context.applicationContext,
-                MovieDatabase::class.java!!, DATABASE_NAME
-            )
-                .build()
-        }
-
-        Log.d(LOG_TAG, "Getting the database instance")
-        return sInstance
-    }
-}
+//object ServiceLocator {
+//
+//    private val LOG_TAG = MovieDatabase::class.java!!.getSimpleName()
+//
+//    private val DATABASE_NAME = "movies_db"
+//    private var sInstance: MovieDatabase? = null
+//
+//    fun getInstance(context: Context): MovieDatabase? {
+//        if (sInstance == null) {
+//
+//            Log.d(LOG_TAG, "Creating new database instance")
+//            sInstance = Room.databaseBuilder<MovieDatabase>(
+//                context.applicationContext,
+//                MovieDatabase::class.java!!, DATABASE_NAME
+//            )
+//                .build()
+//        }
+//
+//        Log.d(LOG_TAG, "Getting the database instance")
+//        return sInstance
+//    }
+//}

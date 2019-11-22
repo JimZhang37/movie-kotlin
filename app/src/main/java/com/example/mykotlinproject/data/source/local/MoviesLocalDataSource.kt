@@ -8,4 +8,15 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class MoviesLocalDataSource
+class MoviesLocalDataSource(private val moviesDao: MoviesDao){
+
+
+
+    suspend fun saveMovie(movie: Movie){
+        moviesDao.insertMovie(movie)
+    }
+
+    fun observerMovies():LiveData<List<Movie>>{
+        return moviesDao.observeMovies()
+    }
+}
