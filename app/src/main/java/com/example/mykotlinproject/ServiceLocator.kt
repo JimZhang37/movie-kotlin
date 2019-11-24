@@ -58,7 +58,7 @@ object ServiceLocator {
 
     private fun createTaskLocalDataSource(context: Context): MoviesLocalDataSource {
         val database = database ?: createDataBase(context)
-        return MoviesLocalDataSource(database.movieDao())
+        return MoviesLocalDataSource(database.movieDao(),database.reviewDao(),database.trailerDao())
     }
 
     private fun createDataBase(context: Context): MovieDatabase {

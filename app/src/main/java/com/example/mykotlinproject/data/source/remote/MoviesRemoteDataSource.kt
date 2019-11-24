@@ -1,20 +1,48 @@
 package com.example.mykotlinproject.data.source.remote
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.mykotlinproject.data.Movie
 import com.example.mykotlinproject.data.Result
 import com.example.mykotlinproject.data.Result.Success
+import com.example.mykotlinproject.data.Result.Error
+import com.example.mykotlinproject.data.Review
+import com.example.mykotlinproject.data.Trailer
+import com.squareup.moshi.JsonDataException
 
 
+object MoviesRemoteDataSource {
 
-object MoviesRemoteDataSource{
 
+    suspend fun downloadPopularMovies(): Result<List<Movie>> {
 
-    suspend fun download(): Result<List<Movie>>{
+        val list = MovieApi.retrofitService.getPopularMoviesAsync().await()
+        return Success(list.results)
 
-            val list = MovieApi.retrofitService.getProperties().await()
+    }
+
+    suspend fun downloadTopRated(): Result<List<Movie>> {
+
+        val list = MovieApi.retrofitService.getTopRatedMoviesAsync().await()
+        return Success(list.results)
+
+    }
+
+    suspend fun downloadMovieReviews(movieId: String): Result<List<Review>> {
+
+        return try {
+            val list = MovieApi.retrofitService.getMovieReviewsAsync(movieId).await()
+            Success(list.results)
+        } catch (e: JsonDataException) {
+            Error(e)
+        }
+
+    }
+
+    suspend fun downloadMovieTrailers(movieId: String): Result<List<Trailer>> {
+        return try {
+            val list = MovieApi.retrofitService.geMovieTrailersAsync(movieId).await()
             return Success(list.results)
-
+        } catch (e: JsonDataException) {
+            Error(e)
+        }
     }
 }

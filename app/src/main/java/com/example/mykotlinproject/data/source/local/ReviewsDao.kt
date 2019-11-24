@@ -23,36 +23,19 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.mykotlinproject.data.Movie
+
 import com.example.mykotlinproject.data.ReviewDB
 import com.example.mykotlinproject.data.TrailerDB
 
 
 @Dao
-interface MoviesDao {
+interface ReviewsDao {
 
-
-    @Query("SELECT * FROM movies")
-    fun observeMovies(): LiveData<List<Movie>>
-
-
-    @Query("SELECT * FROM movies WHERE movie_id = :movieId")
-    fun observeMovieById(movieId: String): LiveData<Movie>
-
-
-    @Query("SELECT * FROM movies")
-    suspend fun getMovies(): List<Movie>
-
-
-    @Query("SELECT * FROM movies WHERE movie_id = :movieId")
-    suspend fun getMovieById(movieId: String): Movie?
-
-
+    //review
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMovie(movie: Movie)
+    suspend fun insertReview(review: ReviewDB)
 
-    @Query("DELETE FROM movies")
-    suspend fun deleteMovies()
-
+    @Query("SELECT * FROM review WHERE movie_id = :movieId")
+    fun observeReviewsByMovieId(movieId: String): LiveData<List<ReviewDB>>
 
 }

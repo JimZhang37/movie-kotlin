@@ -6,14 +6,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.mykotlinproject.data.Movie
+import com.example.mykotlinproject.data.ReviewDB
+import com.example.mykotlinproject.data.TrailerDB
 
 //import com.example.android.architecture.blueprints.todoapp.data.Task
 
-@Database(entities = [Movie::class], version = 1, exportSchema = false)
+@Database(entities = [Movie::class, ReviewDB::class,TrailerDB::class], version = 1, exportSchema = false)
 abstract class MovieDatabase : RoomDatabase() {
 
     abstract fun movieDao(): MoviesDao
-
+    abstract fun reviewDao():ReviewsDao
+    abstract fun trailerDao():TrailersDao
 
 }
 

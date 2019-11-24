@@ -1,10 +1,10 @@
 package com.example.mykotlinproject.data.source.remote
 
-import com.example.mykotlinproject.data.Movie
 import com.example.mykotlinproject.data.MovieList
+import com.example.mykotlinproject.data.ReviewList
+import com.example.mykotlinproject.data.TrailerList
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -23,9 +23,9 @@ private const val PATH_POPULAR = "popular"
 
 private const val PATH_TOP_RATED = "top_rated"
 
-private const val PATH_VIDEOS = "videos"
+private const val PATH_VIDEOS = "{movieId}/videos"
 
-private const val PATH_REVIEWS = "reviews"
+private const val PATH_REVIEWS = "{movieId}/reviews"
 
 private const val API_KEY = "758f975f610e3d276c8f2364e5052672"
 
@@ -42,9 +42,22 @@ private val retrofit = Retrofit.Builder()
 
 interface MovieApiService {
 
+
     @GET(PATH_POPULAR)
-    fun getProperties(@Query(PARAM_APIKEY) key: String = API_KEY):
+    fun getPopularMoviesAsync(@Query(PARAM_APIKEY) key: String = API_KEY):
             Deferred<MovieList>
+
+    @GET(PATH_TOP_RATED)
+    fun getTopRatedMoviesAsync(@Query(PARAM_APIKEY) key: String = API_KEY):
+            Deferred<MovieList>
+
+    @GET(PATH_REVIEWS)
+    fun getMovieReviewsAsync(@Path("movieId") movieId: String, @Query(PARAM_APIKEY) key: String = API_KEY):
+            Deferred<ReviewList>
+
+    @GET(PATH_VIDEOS)
+    fun geMovieTrailersAsync(@Path("movieId") movieId: String, @Query(PARAM_APIKEY) key: String = API_KEY):
+            Deferred<TrailerList>
 }
 
 object MovieApi {

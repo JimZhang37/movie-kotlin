@@ -11,11 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mykotlinproject.R
 import com.example.mykotlinproject.data.Movie
 import com.squareup.picasso.Picasso
+import com.example.mykotlinproject.movielist.MovieListAdapter.ImageViewHolder
 
 class MovieListAdapter(
     private val mContext: Context,
     val mListItemClickListener: ListItemClickListener
-) : RecyclerView.Adapter<MovieListAdapter.ImageViewHolder>() {
+) : RecyclerView.Adapter<ImageViewHolder>() {
 
     private var mMovieList: List<Movie>? = null
     private var mNumberOfViewHolder = 0
@@ -49,16 +50,16 @@ class MovieListAdapter(
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         val path = "http://image.tmdb.org/t/p/w185/" + mMovieList?.get(position)?.mImage
-        Log.d("onBindViewHolder", path)
+        //Log.d("onBindViewHolder", path)
+
         holder.updateWithUrl(path)
-
-
     }
 
+    //inner class can access to outer class's member
     inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         var mMoviePoster: ImageView = itemView.findViewById(R.id.image_holder)
-        var mMovieTitle: TextView = itemView.findViewById(R.id.text_holder)
+        //var mMovieTitle: TextView = itemView.findViewById(R.id.text_holder)
 
         init {
 
@@ -73,12 +74,14 @@ class MovieListAdapter(
                 .error(R.drawable.mistake)
                 .into(mMoviePoster)
 
-            mMovieTitle.text = url
+            //mMovieTitle.text = url
         }
 
         override fun onClick(p0: View?) {
             val movieID = mMovieList!![adapterPosition].mMovieID
             mListItemClickListener.onListItemClick(movieID)
         }
+
+
     }
 }
