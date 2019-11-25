@@ -4,11 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="movie1"
             type="com.example.mykotlinproject.data.Movie" />
-
         <variable
             name="viewModel"
             type="com.example.mykotlinproject.movielist.MovieListViewModel" />
@@ -24,21 +22,15 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <Button
                 android:id="@+id/mybutton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="refresh data" />
-
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-            />
+                android:layout_height="match_parent"/>
         </LinearLayout>
-
     </ScrollView>
 </layout>

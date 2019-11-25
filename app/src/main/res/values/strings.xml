@@ -6,4 +6,10 @@
     <string name="button_to_detail">Button to Detail</string>
     <string name="button">To Detail</string>
     <string name="loading_tasks_error">loading_tasks_error</string>
+    <string name="movie_summary">Movie Summary</string>
+    <string name="movie_image">Movie Image</string>
+    <string name="todo">TODO</string>
+    <string name="movie_reviews">Movie Reviews</string>
+    <string name="movie_trailers">Movie Trailers</string>
+    <string name="movie_title">Movie Title</string>
 </resources>

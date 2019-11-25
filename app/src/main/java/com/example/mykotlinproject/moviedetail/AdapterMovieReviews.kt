@@ -1,7 +1,6 @@
 package com.example.mykotlinproject.moviedetail
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,9 @@ import com.example.mykotlinproject.R
 import com.example.mykotlinproject.data.ReviewDB
 
 
-class MovieReviewsAdapter(
+class AdapterMovieReviews(
     private val mContext: Context
-) : RecyclerView.Adapter<MovieReviewsAdapter.ReviewViewHolder>() {
+) : RecyclerView.Adapter<AdapterMovieReviews.ReviewViewHolder>() {
 
     private var mMovieReviews: List<ReviewDB>? = null
     private var mNumberOfViewHolder = 0

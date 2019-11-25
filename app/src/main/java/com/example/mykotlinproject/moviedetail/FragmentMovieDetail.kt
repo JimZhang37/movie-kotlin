@@ -11,21 +11,23 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mykotlinproject.MoviesApplication
+import com.example.mykotlinproject.R
 import com.example.mykotlinproject.data.*
 
 import com.example.mykotlinproject.databinding.FragmentMovieDetailBinding
+import com.squareup.picasso.Picasso
 
 /**
  * A simple [Fragment] subclass.
  */
-class MovieDetailFragment :
+class FragmentMovieDetail :
     Fragment(),
-    MovieTrailersAdapter.ListItemClickListener {
+    AdapterMovieTrailers.ListItemClickListener {
 
     lateinit var dataBinding: FragmentMovieDetailBinding
-    private val args: MovieDetailFragmentArgs by navArgs()
-    private lateinit var mReviewAdapter: MovieReviewsAdapter
-    private lateinit var mTrailerAdapter: MovieTrailersAdapter
+    private val args: FragmentMovieDetailArgs by navArgs()
+    private lateinit var mReviewAdapterMovieReviews: AdapterMovieReviews
+    private lateinit var mTrailerAdapterMovieTrailers: AdapterMovieTrailers
     private val viewModel by viewModels<MovieDetailViewModel> {
         MovieDetailViewModelFactory(
             (requireContext().applicationContext as MoviesApplication).moviesRepository,
@@ -48,19 +50,17 @@ class MovieDetailFragment :
 //        dataBinding.myMovieTitle.text = args.movieId
 
 
-        dataBinding.myMovieReviews.setHasFixedSize(true)
+        dataBinding.rvMovieReviews.setHasFixedSize(true)
         val layoutManager1 = GridLayoutManager(context, 1)
-        dataBinding.myMovieReviews.layoutManager = layoutManager1
-        mReviewAdapter = MovieReviewsAdapter(context!!)
-        dataBinding.myMovieReviews.adapter = mReviewAdapter
+        dataBinding.rvMovieReviews.layoutManager = layoutManager1
+        mReviewAdapterMovieReviews = AdapterMovieReviews(context!!)
+        dataBinding.rvMovieReviews.adapter = mReviewAdapterMovieReviews
 
-        dataBinding.myMovieTrailers.setHasFixedSize(true)
+        dataBinding.rvMovieTrailers.setHasFixedSize(true)
         val layoutManager2 = GridLayoutManager(context, 1)
-        dataBinding.myMovieTrailers.layoutManager = layoutManager2
-        mTrailerAdapter = MovieTrailersAdapter(context!!, this)
-        dataBinding.myMovieTrailers.adapter = mTrailerAdapter
-
-
+        dataBinding.rvMovieTrailers.layoutManager = layoutManager2
+        mTrailerAdapterMovieTrailers = AdapterMovieTrailers(context!!, this)
+        dataBinding.rvMovieTrailers.adapter = mTrailerAdapterMovieTrailers
 
         return dataBinding.root
     }
@@ -80,21 +80,26 @@ class MovieDetailFragment :
     private fun setupObservation() {
         viewModel.reviews.observe(this, Observer<List<ReviewDB>> {
             //Log.d("setupListAdapter", it.toString())
-            mReviewAdapter.setMovieReviews(it)
+            mReviewAdapterMovieReviews.setMovieReviews(it)
 
         })
 
         viewModel.trailers.observe(this, Observer<List<TrailerDB>> {
             //Log.d("setupListAdapter", it.toString())
-            mTrailerAdapter.setMovieTrailers(it)
+            mTrailerAdapterMovieTrailers.setMovieTrailers(it)
 
         })
 
         viewModel.movie.observe(this, Observer<Movie> {
             //Log.d("setupListAdapter", it.toString())
-            dataBinding.myMovieTitle.text = it.mTitle
-            dataBinding.myMovieSummary.text = it.mSynopsis
-
+            dataBinding.txMovieTitleValue.text = it.mTitle
+            dataBinding.txMovieSummaryValue.text = it.mSynopsis
+            Picasso
+                .get()
+                .load("http://image.tmdb.org/t/p/w185/"+it.mImage)///qdfARIhgpgZOBh3vfNhWS4hmSo3.jpg
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.mistake)
+                .into(dataBinding.ivMovieImage)
         })
     }
 

@@ -19,10 +19,10 @@ import com.example.mykotlinproject.databinding.FragmentFragmentMovieListBinding
  */
 class FragmentMovieList :
     Fragment(),
-    MovieListAdapter.ListItemClickListener {
+    AdapterMovieList.ListItemClickListener {
     private lateinit var binding: FragmentFragmentMovieListBinding
 
-    private lateinit var mAdapter: MovieListAdapter
+    private lateinit var mAdapterMovieList: AdapterMovieList
     private val viewModel by viewModels<MovieListViewModel>{
         MovieListViewModelFactory((requireContext().applicationContext as MoviesApplication).moviesRepository)
     }
@@ -46,8 +46,8 @@ class FragmentMovieList :
         binding.recyclerView.setHasFixedSize(true)
         val layoutManager = GridLayoutManager(context, 2)
         binding.recyclerView.layoutManager = layoutManager
-        mAdapter = MovieListAdapter(context!!, this)
-        binding.recyclerView.adapter = mAdapter
+        mAdapterMovieList = AdapterMovieList(context!!, this)
+        binding.recyclerView.adapter = mAdapterMovieList
 
         return binding.root
     }
@@ -70,7 +70,7 @@ class FragmentMovieList :
     private fun setupAdapter() {
         viewModel.data?.observe(this, Observer<List<Movie>> {
             //Log.d("setupListAdapter", it.toString())
-            mAdapter.setMovie(it)
+            mAdapterMovieList.setMovie(it)
         })
 
     }

@@ -5,17 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mykotlinproject.R
-import com.example.mykotlinproject.data.Trailer
 import com.example.mykotlinproject.data.TrailerDB
 
-class MovieTrailersAdapter(
+class AdapterMovieTrailers(
     private val mContext: Context,
     val mListItemClickListener: ListItemClickListener
-) : RecyclerView.Adapter<MovieTrailersAdapter.TrailerViewHolder>() {
+) : RecyclerView.Adapter<AdapterMovieTrailers.TrailerViewHolder>() {
 
     private var mMovieTrailers: List<TrailerDB>? = null
     private var mNumberOfViewHolder = 0

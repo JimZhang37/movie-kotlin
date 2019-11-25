@@ -1,19 +1,17 @@
 package com.example.mykotlinproject.movielist
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mykotlinproject.R
 import com.example.mykotlinproject.data.Movie
 import com.squareup.picasso.Picasso
-import com.example.mykotlinproject.movielist.MovieListAdapter.ImageViewHolder
+import com.example.mykotlinproject.movielist.AdapterMovieList.ImageViewHolder
 
-class MovieListAdapter(
+class AdapterMovieList(
     private val mContext: Context,
     val mListItemClickListener: ListItemClickListener
 ) : RecyclerView.Adapter<ImageViewHolder>() {
