@@ -10,18 +10,44 @@ import com.example.mykotlinproject.data.source.local.MoviesLocalDataSource
 
 class DefaultMovieRepository(private val localDataSource: MoviesLocalDataSource) {
 
-
     suspend fun download() {
+        downloadMoviePopular()
+        downloadMovieTopRated()
+    }
+
+    private suspend fun downloadMoviePopular() {
         val result = MoviesRemoteDataSource.downloadPopularMovies()
         if (result is Success) {
             result.data.forEach { movie ->
-                localDataSource.saveMovie(movie)
+                val moviePopular = MoviePopular(movie.mMovieID)
+                localDataSource.saveMoviePopular(movie, moviePopular)
             }
         }
     }
 
+    private suspend fun downloadMovieTopRated() {
+        val result = MoviesRemoteDataSource.downloadTopRated()
+        if (result is Success) {
+            result.data.forEach { movie ->
+                val movieTopRated = MovieTopRated(movie.mMovieID)
+                localDataSource.saveMovieTopRated(movie, movieTopRated)
+            }
+        }
+    }
+
+    /**
+     * It's time to deprecate this function
+     */
     fun observeMovies(): LiveData<List<Movie>> {
         return localDataSource.observeMovies()
+    }
+
+    fun observeMoviesTopRated(): LiveData<List<Movie>> {
+        return localDataSource.observeMoviesTopRated()
+    }
+
+    fun observeMoviesPopular(): LiveData<List<Movie>> {
+        return localDataSource.observeMoviesPopular()
     }
 
     fun observeMovie(movieId: String): LiveData<Movie> {
@@ -40,18 +66,18 @@ class DefaultMovieRepository(private val localDataSource: MoviesLocalDataSource)
         val resultReviews = MoviesRemoteDataSource.downloadMovieReviews(movieId)
         if (resultReviews is Success) {
             resultReviews.data.forEach { review ->
-                val reviewdb = ReviewDB(review,movieId)
-                Log.d("downloadMovieDetails: reviews",reviewdb.toString() )
+                val reviewdb = ReviewDB(review, movieId)
+                Log.d("downloadMovieDetails: reviews", reviewdb.toString())
 
                 localDataSource.saveReview(reviewdb)
             }
         }
 
         val resultTrailers = MoviesRemoteDataSource.downloadMovieTrailers(movieId)
-        if(resultTrailers is Success){
-            resultTrailers.data.forEach { trailer->
-                val trailerdb = TrailerDB(trailer,movieId)
-                Log.d("downloadMovieDetails: trailers",trailerdb.toString() )
+        if (resultTrailers is Success) {
+            resultTrailers.data.forEach { trailer ->
+                val trailerdb = TrailerDB(trailer, movieId)
+                Log.d("downloadMovieDetails: trailers", trailerdb.toString())
                 localDataSource.saveTrailer(trailerdb)
             }
         }

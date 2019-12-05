@@ -18,41 +18,59 @@ package com.example.mykotlinproject.data.source.local
 
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Update
-import com.example.mykotlinproject.data.Movie
-import com.example.mykotlinproject.data.ReviewDB
-import com.example.mykotlinproject.data.TrailerDB
+import androidx.room.*
+import com.example.mykotlinproject.data.*
 
 
 @Dao
 interface MoviesDao {
-
-
     @Query("SELECT * FROM movies")
     fun observeMovies(): LiveData<List<Movie>>
-
 
     @Query("SELECT * FROM movies WHERE movie_id = :movieId")
     fun observeMovieById(movieId: String): LiveData<Movie>
 
-
     @Query("SELECT * FROM movies")
     suspend fun getMovies(): List<Movie>
-
 
     @Query("SELECT * FROM movies WHERE movie_id = :movieId")
     suspend fun getMovieById(movieId: String): Movie?
 
+    @Query("DELETE FROM movies")
+    suspend fun deleteMovies()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovie(movie: Movie)
 
-    @Query("DELETE FROM movies")
-    suspend fun deleteMovies()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMoviePopular(movie: MoviePopular)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMovieToprated(movie: MovieTopRated)
+
+    /**
+     * intert movies into both Movie table and MoviePopular table
+     */
+    @Transaction
+    suspend fun insertMoviesPopularTransaction(movie: Movie,moviePopular: MoviePopular) {
+        insertMoviePopular(moviePopular)
+        insertMovie(movie)
+    }
+
+    /**
+     * intert movies into both Movie table and MovieTopRated table
+     */
+    @Transaction
+    suspend fun insertMoviesTopRatedTransaction(movie: Movie,movieTopRated: MovieTopRated) {
+        insertMovieToprated(movieTopRated)
+        insertMovie(movie)
+    }
 
 
+    @Query("SELECT * FROM movies INNER JOIN movies_popular ON movies.movie_id = movies_popular.mMovieID")
+    fun observeMoviesPopular(): LiveData<List<Movie>>
+
+
+    @Query("SELECT * FROM movies INNER JOIN movies_top_rated ON movies.movie_id = movies_top_rated.mMovieID")
+    fun observeMoviesTopRated(): LiveData<List<Movie>>
 }

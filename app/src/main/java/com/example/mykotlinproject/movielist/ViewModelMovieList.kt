@@ -15,12 +15,21 @@ class MovieListViewModel(
 
     private val repository: DefaultMovieRepository
 ) : ViewModel() {
-//    private val context = getApplication<Application>().applicationContext
+    //    private val context = getApplication<Application>().applicationContext
 //    private val db = ServiceLocator.getInstance(context)
 
-    private var _data = repository.observeMovies()
-    val data
-        get() = _data
+
+    val dataTopRated
+        get() = _dataTopRated
+
+    private var _dataTopRated = repository.observeMoviesTopRated()
+
+    val dataPopular
+        get() = _dataPopular
+
+    private var _dataPopular = repository.observeMoviesPopular()
+
+
 
     fun download() {
 
@@ -43,7 +52,8 @@ class MovieListViewModel(
 }
 
 @Suppress("UNCHECKED_CAST")
-class MovieListViewModelFactory(private val repository:DefaultMovieRepository
+class MovieListViewModelFactory(
+    private val repository: DefaultMovieRepository
 
 ) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>) =

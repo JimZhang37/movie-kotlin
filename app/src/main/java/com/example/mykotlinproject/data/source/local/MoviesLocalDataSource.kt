@@ -10,12 +10,27 @@ class MoviesLocalDataSource(
 ) {
 
 
-    suspend fun saveMovie(movie: Movie) {
-        moviesDao.insertMovie(movie)
+    suspend fun saveMoviePopular(movie: Movie, moviePopular: MoviePopular) {
+        moviesDao.insertMoviesPopularTransaction(movie,moviePopular)
     }
 
+    suspend fun saveMovieTopRated(movie: Movie, movieTopRated: MovieTopRated) {
+        moviesDao.insertMoviesTopRatedTransaction(movie,movieTopRated)
+    }
+
+    /**
+     * It's time to deprecate this function
+     */
     fun observeMovies(): LiveData<List<Movie>> {
         return moviesDao.observeMovies()
+    }
+
+    fun observeMoviesPopular(): LiveData<List<Movie>> {
+        return moviesDao.observeMoviesPopular()
+    }
+
+    fun observeMoviesTopRated(): LiveData<List<Movie>> {
+        return moviesDao.observeMoviesTopRated()
     }
 
     fun observeMovie(movieId: String): LiveData<Movie> {

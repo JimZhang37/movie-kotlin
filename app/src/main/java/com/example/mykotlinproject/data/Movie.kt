@@ -1,12 +1,10 @@
 package com.example.mykotlinproject.data
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.squareup.moshi.Json
 
 
-data class MovieList @JvmOverloads constructor(
+data class MovieList constructor(
     @Json(name = "page") val page: String,
     @Json(name = "results") val results:List<Movie>
 )
@@ -36,3 +34,43 @@ data class Movie @JvmOverloads constructor(
 
 }
 
+/**
+ * The popular movies'id will be stored here, while movie information is stored in movie table
+ */
+@Entity(tableName = "movies_popular")
+data class MoviePopular(
+    @PrimaryKey
+    val mMovieID: String
+)
+
+@Entity(tableName = "movies_top_rated")
+data class MovieTopRated(
+    @PrimaryKey
+    val mMovieID: String
+)
+
+//
+//
+//@DatabaseView("SELECT movies.movie_id, movies.image, movies.title, movies.synopsis, movies.user_rating, movies.release_date " +
+//        "FROM movies " +
+//        "INNER JOIN movies_popular ON movies.movie_id = movies_popular.mMovieID")
+//data class MoviePopularView(
+//    val movie_id: String,
+//    val image: String,
+//    val title: String,
+//    val synopsis: String,
+//    val user_rating: String,
+//    val release_date: String
+//)
+//
+//@DatabaseView("SELECT movies.movie_id, movies.image, movies.title, movies.synopsis, movies.user_rating, movies.release_date " +
+//        "FROM movies " +
+//        "INNER JOIN movies_top_rated ON movies.movie_id = movies_top_rated.mMovieID")
+//data class MovieTopRatedView(
+//    val movie_id: String,
+//    val image: String,
+//    val title: String,
+//    val synopsis: String,
+//    val user_rating: String,
+//    val release_date: String
+//)
